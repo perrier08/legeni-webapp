@@ -48,17 +48,19 @@ pipeline {
             }
         }
 
-        stage('Push Docker Hub') {
+                stage('Push Docker Hub') {
             when { expression { params.PUSH } }
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub',
                                                   usernameVariable: 'DH_USER',
                                                   passwordVariable: 'DH_TOKEN')]) {
-                    sh '''
-                        echo "$DH_TOKEN" | docker login -u "$DH_USER" --password-stdin
-                        docker push $IMAGE:$VERSION
-                        docker push $IMAGE:latest
-                    '''
+                    retry(3) {
+                        sh '''
+                            echo "$DH_TOKEN" | docker login -u "$DH_USER" --password-stdin
+                            docker push $IMAGE:$VERSION
+                            docker push $IMAGE:latest
+                        '''
+                    }
                 }
             }
         }
