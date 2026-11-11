@@ -33,7 +33,7 @@ def health():
 @app.route("/")
 def index():
     version = os.environ.get("APP_VERSION", "dev")
-    color = os.environ.get("APP_COLOR", "#1f6feb")
+    color = os.environ.get("APP_COLOR", "#8250df")
     return PAGE.substitute(version=version, color=color)
 
 
