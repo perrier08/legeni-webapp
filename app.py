@@ -27,7 +27,7 @@ PAGE = Template("""<!doctype html>
 
 @app.route("/health")
 def health():
-    return jsonify(status="ko")
+    return jsonify(status="ok")
 
 
 @app.route("/")
